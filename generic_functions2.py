@@ -1,20 +1,45 @@
 '''
-
+Generic functions used in FAIRification Notebooks
 '''
 
-# import openpyxl as pyxl
-# import json
 import time
 from datetime import datetime
 import shutil
 import os
-# import numpy as np
-# import pandas as pd
-# import csv
 import glob
 import zipfile
 import sys
 
+
+# try to stop elegantly
+class StopExecution(Exception):
+    def _render_traceback_(self):
+        pass
+
+    
+def correct_date(a,b):
+    '''
+    Dates are usually an issue, this function converts certain given formats into ISO8601, %Y-%m-%d format
+    '''
+    if a == '': return ''
+    try:
+        a = datetime.strptime(str(a), b)
+        return datetime.strftime(a, '%Y-%m-%d')
+    except:
+        return 'ERR: ' + str(a)
+    
+    
+def duration_days(x, con):
+    '''
+    Duration in days, requires that dates are in ISO 8601 format
+    '''
+    try:
+        end = datetime.strptime(x[mv], '%Y-%m-%d')
+        start = datetime.strptime(x[con], '%Y-%m-%d')
+        return (end-start).days
+    except:
+        return 'ERR'    
+        
 
 def find_unpack_zips(folder, correction=0):
     '''
