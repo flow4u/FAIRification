@@ -205,7 +205,29 @@ def output_csv(df, name, timestamp=True):
         pyanswer = answer('Respond with C(ontinue) or S(top) ')
         if not pyanswer:
             print('You have halted the operation, please rerun this notebook when you are ready.')
-            sys.exit(0)
+            sys.exit(1)
         else:
             output_csv(df, name)
+
+            
+# function for yes/no result based on the answer proded as argument
+def answer(reply):
+    '''
+    To prompt the user to accept the next step, false results in halting the script
+    True: C(onctiue), or c(continue)
+    False: S(top), s(top), ''
+    '''
+    yes = set (['C', 'c'])
+    no = set (['S', 's', ''])
     
+    while True:
+        choice = input(reply).lower()
+        if choice in yes:
+            print('\nScript continues....')
+            return True
+        elif choice in no:
+            print('\nScript has halted, please make changes and rerun the notebook.')
+            print('\n\n\n\n')
+            return False
+        else:
+            print("Please respond with 'C' or 'S'\n")
