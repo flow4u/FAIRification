@@ -128,7 +128,7 @@ def choose_dir_item(folder, type='folders', what='All'):
             if this_answer.lower()=='q':
                 print_title('Quiting the notebook run on instruction of the user')
                 item_choosen = True
-                raise SystemExit("Stop right there!")
+                raise StopExecution #SystemExit("Stop right there!")
                 # return ''
 
 
@@ -205,7 +205,7 @@ def output_csv(df, name, timestamp=True):
         pyanswer = answer('Respond with C(ontinue) or S(top) ')
         if not pyanswer:
             print('You have halted the operation, please rerun this notebook when you are ready.')
-            sys.exit(1)
+            raise StopExecution #sys.exit(1)
         else:
             output_csv(df, name)
 
